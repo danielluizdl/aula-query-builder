@@ -18,9 +18,17 @@ app.get('/', async (req, res) => {
         telefone: '(99) 9999-9999'
     }
 
-    // const agenda = await knex('agenda').insert(guido).returning(['id', 'nome']);
-    const agenda = await knex('agenda').insert([maria, joao]).returning('*');
+    const agenda = await knex('agenda').insert(guido).returning(['id', 'nome']);
+    //const agenda = await knex('agenda').insert([maria, joao]).returning('*');
     return res.json(agenda);
+});
+
+app.put('/:id', async (req, res) => {
+    const { nome, email, telefone } = req.body;
+    const { id } = req.params;
+
+    const agendaAtualizada = await knex('agenda').update({ nome, email, telefone }).where('id', id).returning('*');
+    return res.json(agendaAtualizada);
 });
 
 
