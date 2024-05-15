@@ -31,5 +31,11 @@ app.put('/:id', async (req, res) => {
     return res.json(agendaAtualizada);
 });
 
+app.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const agendaExcluida = await knex('agenda').del().where('id', id);
+    return res.json(agendaExcluida);
+});
 
 app.listen(3000);
